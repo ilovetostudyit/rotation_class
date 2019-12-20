@@ -6,10 +6,10 @@ class Rotation():
     def __init__(self, params):
         self.sides_dict = {"0": 15,
                             "1": 105,
-                            "2": 120,
-                            "3": 150,
+                            "2": 135,
+                            "3": 225,
                             "4": 255,
-                            "5": 285}
+                            "5": 345}
         self.dist_to_side = {}
         self.norm_sides_dict = {}
         self._params = params
