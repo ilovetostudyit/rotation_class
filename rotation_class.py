@@ -27,7 +27,7 @@ class Rotation():
         else:
             self.cur_x -= math.ceil(math.sin(math.radians(self.angle_between_manip)) * self.robot_rad)
         self.cur_y += math.ceil(math.cos(math.radians(self.angle_between_manip)) * self.robot_rad)
-        print("my new coords are: " + str(self.cur_x) + " " + str(self.cur_y))
+        return(self.cur_x, self.cur_y)
     ##get nearest manipulator in the side
     def get_nearest_side(self):
         for side in self.sides_dict:
@@ -36,15 +36,16 @@ class Rotation():
         self.norm_sides_dict = OrderedDict(sorted(self.norm_sides_dict.items(), key=itemgetter(1)))
         for side in self.norm_sides_dict:
             if ((self.bocal_array[int(side)]).count(0) >= 1):
-                print("i've need to turn " + str(self.dist_to_side[side]))
+                #print("i've need to turn " + str(self.dist_to_side[side]))
                 value = int(side) / 2
-                print(str(value))
-                return (side)
+                #print(str(value))
+                return (side, self.dist_to_side[side])
                 break
     def execute(self):
-        side = self.get_nearest_side()
+        side, angle = self.get_nearest_side()
         if side:
             self.get_move(self.sides_dict[side])
+        return(self.cur_x, self.cur_y, angle, side)
 
 robot_rad = 10
 angle_between_manip = 15.0
@@ -60,4 +61,4 @@ params = {"cur_x": cur_x,
           "robot_rad": robot_rad,
           "angle_between_manip": angle_between_manip}
 rotate = Rotation(params);
-rotate.execute()
+print(rotate.execute())
